@@ -1,0 +1,66 @@
+# robots.txt for vertextechhouse.com
+# Last updated: 2026-09-22
+
+# -----------------------------------------------
+# Allow all major search engine crawlers
+# -----------------------------------------------
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# -----------------------------------------------
+# Default rules for all other crawlers
+# -----------------------------------------------
+
+User-agent: *
+Allow: /
+
+# Disallow admin, backend, and private areas
+Disallow: /admin/
+Disallow: /wp-admin/
+Disallow: /wp-login.php
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /wp-content/themes/
+Disallow: /cgi-bin/
+Disallow: /private/
+Disallow: /config/
+Disallow: /includes/
+Disallow: /tmp/
+
+# Disallow duplicate/low-value content
+Disallow: /search/
+Disallow: /?s=
+Disallow: /?p=
+Disallow: /tag/
+Disallow: /page/
+Disallow: /feed/
+Disallow: /comments/
+Disallow: /trackback/
+
+# Disallow user account and checkout pages
+Disallow: /my-account/
+Disallow: /cart/
+Disallow: /checkout/
+Disallow: /order-received/
+
+# -----------------------------------------------
+# Sitemap location
+# -----------------------------------------------
+
+Sitemap: https://vertextechhouse.com/sitemap.xml
