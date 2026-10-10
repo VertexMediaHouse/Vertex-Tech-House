@@ -691,7 +691,7 @@ export function ServicePage({ slug }: { slug: ServiceSlug }) {
           </div>
         </SectionWrap>
       </div>
-      {s.reviews && <Reviews rows={1} videos={videoTestimonials} />}
+      {s.reviews && <Reviews videos={videoTestimonials} />}
       <Faq faqs={s.faqs} />
     </PageShell>
   );

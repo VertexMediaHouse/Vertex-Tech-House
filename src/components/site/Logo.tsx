@@ -1,4 +1,3 @@
-import * as React from "react";
 import { cn } from "@/lib/utils";
 
 // TODO(logo): placeholder, this is the VMH mark. Swap the <svg> below for the Vertex Tech House logo.

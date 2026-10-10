@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Link } from "@tanstack/react-router";
 import { Mail, MessageCircle } from "lucide-react";
 import { Logo } from "./Logo";

@@ -6,10 +6,6 @@ export default defineConfig({
       host: true,
       allowedHosts: true,
     },
-    preview: {
-      host: true,
-      allowedHosts: true,
-    },
   },
   tanstackStart: {
     server: { entry: "src/server.ts" },

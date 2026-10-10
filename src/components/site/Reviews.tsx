@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import SpotlightCard from "./SpotlightCard";
 import { cn } from "@/lib/utils";
@@ -141,19 +140,7 @@ const ReviewCard = ({ review, name, position, service }: Review) => {
   );
 };
 
-export function Reviews({
-  rows = 2,
-  items = reviews,
-  videos,
-}: {
-  rows?: 1 | 2;
-  items?: Review[];
-  videos?: VideoTestimonial[];
-}) {
-  // Split reviews into rows
-  const row1 = rows === 1 ? items : items.slice(0, Math.ceil(items.length / 2));
-  const row2 = items.slice(Math.ceil(items.length / 2));
-
+export function Reviews({ videos }: { videos?: VideoTestimonial[] }) {
   return (
     <section
       id="reviews"
@@ -212,53 +199,15 @@ export function Reviews({
       )}
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-        <div className="relative flex flex-col gap-4">
-          {/* Row 1: Moving Left */}
-          <div className="marquee-mask relative flex overflow-hidden py-1">
-            <div className="flex animate-marquee whitespace-nowrap hover:[animation-play-state:paused]">
-              {[...row1, ...row1, ...row1].map((review, i) => (
-                <ReviewCard key={`row1-${i}`} {...review} />
-              ))}
-            </div>
+        {/* a lighter edge fade than the shared .marquee-mask, so whole cards stay readable */}
+        <div className="relative flex overflow-hidden py-1 [mask-image:linear-gradient(to_right,transparent,black_2%,black_98%,transparent)]">
+          <div className="flex animate-marquee whitespace-nowrap hover:[animation-play-state:paused]">
+            {[...reviews, ...reviews, ...reviews].map((review, i) => (
+              <ReviewCard key={i} {...review} />
+            ))}
           </div>
-
-          {/* Row 2: Moving Right (Only if rows === 2 and we have enough items) */}
-          {rows === 2 && row2.length > 0 && (
-            <div className="marquee-mask relative flex overflow-hidden py-1">
-              <div className="flex animate-marquee-reverse whitespace-nowrap hover:[animation-play-state:paused]">
-                {[...row2, ...row2, ...row2].map((review, i) => (
-                  <ReviewCard key={`row2-${i}`} {...review} />
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       </div>
-
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-33.33%); }
-        }
-        @keyframes marquee-reverse {
-          0% { transform: translateX(-33.33%); }
-          100% { transform: translateX(0); }
-        }
-        .animate-marquee {
-          animation: marquee 40s linear infinite;
-        }
-        .animate-marquee-reverse {
-          animation: marquee-reverse 40s linear infinite;
-        }
-        .marquee-mask {
-          -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
-          mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
-        }
-      `,
-        }}
-      />
     </section>
   );
 }

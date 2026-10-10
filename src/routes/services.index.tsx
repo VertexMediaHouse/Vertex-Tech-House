@@ -153,7 +153,7 @@ function ServicesPage() {
       />
       <ToolAssembly />
       <CaseStudies />
-      <Reviews rows={1} />
+      <Reviews />
       <Packages />
     </PageShell>
   );

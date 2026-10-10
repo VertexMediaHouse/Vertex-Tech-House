@@ -28,7 +28,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     else root.classList.remove("dark");
     try {
       localStorage.setItem("vertex_theme_v2", theme);
-    } catch {}
+    } catch {
+      // storage blocked (private mode): the theme still works, it just isn't remembered
+    }
   }, [theme]);
 
   const setTheme = React.useCallback((t: Theme) => setThemeState(t), []);

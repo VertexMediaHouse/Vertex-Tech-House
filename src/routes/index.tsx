@@ -21,7 +21,7 @@ function Index() {
       <ServiceOverview />
       <Portfolio />
       <WhyChooseUs />
-      <Reviews rows={1} videos={videoTestimonials} />
+      <Reviews videos={videoTestimonials} />
     </PageShell>
   );
 }

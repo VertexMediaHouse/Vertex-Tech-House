@@ -23,10 +23,10 @@ const StarBorder = <T extends React.ElementType = "div">({
   return (
     <Component
       className={`relative inline-block overflow-hidden rounded-xl ${className}`}
-      {...(rest as any)}
+      {...(rest as Record<string, unknown>)}
       style={{
         padding: `${thickness}px`,
-        ...(rest as any).style,
+        ...(rest as { style?: React.CSSProperties }).style,
       }}
     >
       <div

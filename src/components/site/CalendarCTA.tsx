@@ -2,15 +2,7 @@ import { useState, useEffect } from "react";
 import type * as React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import {
-  Calendar,
-  Clock,
-  ArrowRight,
-  CheckCircle2,
-  ShieldCheck,
-  Sparkles,
-  UserCheck,
-} from "lucide-react";
+import { Calendar, Clock, ArrowRight, ShieldCheck, Sparkles, UserCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GlareHover } from "./GlareHover";
 import { loadCal } from "@/lib/cal";

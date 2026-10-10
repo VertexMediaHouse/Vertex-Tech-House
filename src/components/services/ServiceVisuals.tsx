@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import type * as React from "react";
 import {
   AnimatePresence,
@@ -67,50 +67,6 @@ export function SectionWrap({
         {children}
       </div>
     </section>
-  );
-}
-
-/* ---------- hero: the live app with floating chips ---------- */
-
-/** Drifts to a new random spot within ±DRIFT px every few seconds. */
-const DRIFT = 14;
-function Chip({ className, children }: { className?: string; children: React.ReactNode }) {
-  const [to, setTo] = useState({ x: 0, y: 0, d: 3 });
-  useEffect(() => {
-    let id: ReturnType<typeof setTimeout>;
-    const move = () => {
-      const d = 2 + Math.random() * 2;
-      setTo({ x: (Math.random() * 2 - 1) * DRIFT, y: (Math.random() * 2 - 1) * DRIFT, d });
-      id = setTimeout(move, d * 1000);
-    };
-    move();
-    return () => clearTimeout(id);
-  }, []);
-  return (
-    <motion.div
-      animate={{ x: to.x, y: to.y }}
-      transition={{ duration: to.d, ease: "easeInOut" }}
-      className={cn(
-        "pointer-events-none absolute z-20 hidden md:block liquid-glass rounded-2xl border border-white/30 dark:border-white/10 p-3 shadow-xl",
-        className,
-      )}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-function ChipBody({ icon, value, label }: { icon: React.ReactNode; value: string; label: string }) {
-  return (
-    <div className="flex items-center gap-2.5">
-      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#ff4d31]/15 text-[#ff4d31] [&>svg]:h-4 [&>svg]:w-4">
-        {icon}
-      </span>
-      <span>
-        <span className="block text-sm font-bold text-neutral-900 dark:text-white">{value}</span>
-        <span className="block text-[11px] text-neutral-500 dark:text-neutral-400">{label}</span>
-      </span>
-    </div>
   );
 }
 
