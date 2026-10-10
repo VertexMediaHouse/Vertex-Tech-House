@@ -1,10 +1,12 @@
 import * as React from "react";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { ArrowRight, Check, Mail, PhoneCall } from "lucide-react";
+import { ArrowRight, PhoneCall } from "lucide-react";
 import { cn } from "@/lib/utils";
+import type { ServiceSlug } from "@/components/services/ServicePage";
+import { Avatar, Fit } from "@/components/showcase/kit";
+import { WebsiteApp } from "@/components/showcase/WebsiteApp";
 import { AutomationAnimation } from "../animation/AutomationAnimation";
-import { CrmAnimation } from "../animation/CrmAnimation";
 import { IntegrationsFlow } from "../animation/IntegrationsFlow";
 import { SectionGlow } from "./SectionGlow";
 
@@ -19,7 +21,7 @@ function Cell({
   visual: React.ReactNode;
   title: string;
   body: string;
-  link?: { slug: "automation" | "crm"; label: string };
+  link?: { slug: ServiceSlug; label: string };
 }) {
   return (
     <motion.article
@@ -85,55 +87,144 @@ function VoiceVisual() {
   );
 }
 
-const sequence = [
-  { icon: Mail, label: "Intro email", day: 1 },
-  { icon: Mail, label: "Follow-up", day: 3 },
-  { icon: PhoneCall, label: "Call", day: 6 },
+/** A light-mode browser window peeking up from the bottom of a card, like the live demos. */
+function Window({
+  host,
+  className,
+  children,
+}: {
+  host: string;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      inert
+      className={cn(
+        "absolute top-6 left-6 overflow-hidden rounded-t-xl bg-white ring-1 ring-black/10 shadow-[0_24px_48px_-24px_rgba(0,0,0,0.35)] dark:ring-white/15",
+        className,
+      )}
+    >
+      <div className="flex items-center gap-2 border-b border-neutral-200 bg-neutral-100 px-3 py-1.5">
+        <span className="flex gap-1">
+          <span className="h-2 w-2 rounded-full bg-[#ff5f57]" />
+          <span className="h-2 w-2 rounded-full bg-[#febc2e]" />
+          <span className="h-2 w-2 rounded-full bg-[#28c840]" />
+        </span>
+        <span className="mx-auto truncate rounded bg-white px-2 py-0.5 text-[10px] text-neutral-500">
+          {host}
+        </span>
+        <span className="w-6" />
+      </div>
+      {children}
+    </div>
+  );
+}
+
+const noop = () => {};
+
+/** The live demo site from /services, touring itself. Never narrower than 22rem, so it always fills the card. */
+function WebsiteVisual() {
+  return (
+    <Window host="northline.studio" className="w-[max(calc(100%-3rem),22rem)]">
+      <Fit>
+        <WebsiteApp onPath={noop} />
+      </Fit>
+    </Window>
+  );
+}
+
+const crmStats = [
+  ["Pipeline value", "£1.28M", "+12.4% vs Aug"],
+  ["Open deals", "38", "+6 this week"],
+  ["Won this quarter", "£412k", "+£86k this week"],
+];
+const pipeline = [
+  { stage: "Enquiry", deals: 16, value: "£452k", bar: "bg-sky-500" },
+  { stage: "Consultation", deals: 13, value: "£418k", bar: "bg-amber-500" },
+  { stage: "Proposal", deals: 9, value: "£410k", bar: "bg-violet-500" },
+  { stage: "Won", deals: 6, value: "£204k", bar: "bg-emerald-500" },
+];
+const newLeads = [
+  { name: "Sofia Alvarez", project: "Hotel lobby, Casa Verde", source: "Referral", score: 91 },
+  { name: "Daniel Park", project: "Loft conversion", source: "Website", score: 86 },
+  { name: "Priya Shah", project: "Kitchen & dining", source: "Instagram", score: 72 },
+  { name: "Marcus Reid", project: "Townhouse refurbishment", source: "Phone", score: 64 },
 ];
 
-// Each step of the sequence slides in, gets its "sent" tick, then everything resets together.
-const obKeyframes = sequence
-  .map((_, i) => {
-    const t = 8 + i * 22; // % of the loop where step i appears
-    return `
-      @keyframes ob-in-${i} {
-        0%, ${t}% { opacity: 0; transform: translateX(-12px); }
-        ${t + 6}%, 90% { opacity: 1; transform: translateX(0); }
-        97%, 100% { opacity: 0; transform: translateX(0); }
-      }
-      @keyframes ob-sent-${i} {
-        0%, ${t + 12}% { opacity: 0; transform: scale(0); }
-        ${t + 15}% { opacity: 1; transform: scale(1.3); }
-        ${t + 18}%, 100% { opacity: 1; transform: scale(1); }
-      }
-      .ob-step-${i} { animation: ob-in-${i} 6s ease-out infinite; }
-      .ob-sent-${i} { animation: ob-sent-${i} 6s ease-out infinite; }`;
-  })
-  .join("");
-
-function OutboundVisual() {
+/** The demo CRM's dashboard in one glance: stats, the pipeline by stage, and the newest leads. */
+function CrmVisual() {
   return (
-    <div className="absolute inset-0 flex flex-col justify-center gap-3 px-8">
-      <style>{`${obKeyframes}
-        @media (prefers-reduced-motion: reduce) { [class*="ob-step-"], [class*="ob-sent-"] { animation: none; } }
-      `}</style>
-      {sequence.map((s, i) => (
-        <div
-          key={s.label}
-          style={{ marginLeft: i * 28 }}
-          className={`ob-step-${i} flex w-fit items-center gap-2.5 rounded-lg liquid-glass border border-neutral-200/70 dark:border-white/10 dark:!bg-white/[0.03] px-3 py-2 text-sm`}
-        >
-          <s.icon className="h-4 w-4 text-[#ff4d31]" />
-          <span className="font-medium text-neutral-900 dark:text-white">{s.label}</span>
-          <span className="text-xs text-neutral-500">Day {s.day}</span>
-          <span
-            className={`ob-sent-${i} flex h-4 w-4 items-center justify-center rounded-full bg-[#2f7a4a] text-white`}
-          >
-            <Check className="h-2.5 w-2.5" strokeWidth={3.5} />
-          </span>
+    <Window host="crm.northline.app" className="right-6 bottom-0">
+      <div className="h-full space-y-2 bg-neutral-50 p-3 text-neutral-900">
+        <div className="grid grid-cols-3 gap-2">
+          {crmStats.map(([label, value, delta]) => (
+            <div key={label} className="rounded-lg border border-neutral-200 bg-white px-2.5 py-2">
+              <div className="truncate text-[10px] text-neutral-500">{label}</div>
+              <div className="text-[15px] font-semibold tracking-tight">{value}</div>
+              <div className="truncate text-[9px] font-medium text-emerald-600">{delta}</div>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+        <div className="grid grid-cols-2 gap-2">
+          <div className="rounded-lg border border-neutral-200 bg-white p-2.5">
+            <div className="mb-2 text-[11px] font-medium">Pipeline</div>
+            <ul className="space-y-1.5">
+              {pipeline.map((p, i) => (
+                <li key={p.stage} className="text-[10px]">
+                  <div className="flex justify-between text-neutral-500">
+                    <span>{p.stage}</span>
+                    <span>
+                      <span className="font-medium text-neutral-900">{p.deals}</span>
+                      <span className="max-sm:hidden"> · {p.value}</span>
+                    </span>
+                  </div>
+                  <motion.span
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0.2 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                    className={cn("mt-0.5 block h-1.5 origin-left rounded-full", p.bar)}
+                    style={{ width: `${(p.deals / pipeline[0].deals) * 100}%` }}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-lg border border-neutral-200 bg-white p-2.5">
+            <div className="mb-2 flex items-center justify-between text-[11px] font-medium">
+              New leads
+              <span className="rounded-full bg-neutral-100 px-1.5 text-[9px] text-neutral-500">
+                12
+              </span>
+            </div>
+            <ul className="space-y-1.5">
+              {newLeads.map((l, i) => (
+                <motion.li
+                  key={l.name}
+                  initial={{ opacity: 0, y: 6 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
+                  className="flex items-center gap-2"
+                >
+                  <Avatar name={l.name} size={20} />
+                  <span className="min-w-0 flex-1 leading-tight">
+                    <span className="block truncate text-[10px] font-medium">{l.name}</span>
+                    <span className="block truncate text-[9px] text-neutral-500 max-sm:hidden">
+                      {l.project} · {l.source}
+                    </span>
+                  </span>
+                  <span className="shrink-0 rounded-full bg-emerald-50 px-1.5 text-[9px] font-semibold text-emerald-700">
+                    {l.score}
+                  </span>
+                </motion.li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </Window>
   );
 }
 
@@ -161,6 +252,19 @@ export function Portfolio() {
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <Cell
+            visual={<WebsiteVisual />}
+            title="Client websites"
+            body="Fast, SEO-ready sites built around how your customers enquire. Every form, booking and chat lands straight in your CRM."
+            link={{ slug: "website", label: "Explore websites" }}
+          />
+          <Cell
+            className="md:col-span-2"
+            visual={<CrmVisual />}
+            title="Custom CRM builds"
+            body="Your stages, your fields, your rules. A CRM shaped around how your team sells, with no bloated seats or features you never touch."
+            link={{ slug: "crm", label: "Explore CRM" }}
+          />
+          <Cell
             className="md:col-span-2"
             visual={<AutomationAnimation />}
             title="n8n workflow automation"
@@ -171,18 +275,6 @@ export function Portfolio() {
             visual={<VoiceVisual />}
             title="AI voice agents"
             body="Agents that answer, qualify and book meetings on the phone, and log every call to your CRM."
-          />
-          <Cell
-            visual={<OutboundVisual />}
-            title="Outbound campaigns"
-            body="Enriched lead lists and personalised sequences that follow up on schedule, every time."
-          />
-          <Cell
-            className="md:col-span-2"
-            visual={<CrmAnimation />}
-            title="Custom CRM builds"
-            body="Your stages, your fields, your rules. A CRM shaped around how your team sells, with no bloated seats or features you never touch."
-            link={{ slug: "crm", label: "Explore CRM" }}
           />
 
           <motion.article

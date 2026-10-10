@@ -1,24 +1,22 @@
 # Vertex Tech House - AI Indexing Guide
 
 Site purpose:
-Vertex Tech House is a service-based tech agency focused on business automation and custom CRM development.
+Vertex Tech House is a service-based tech agency building websites, custom ERP and CRM systems, and AI automation.
 Sister company of Vertex Media House (vertexmediahouse.com), which handles video editing.
 
 Core services:
-- n8n workflow automation
-- AI voice agents and chat/task agents
-- Outbound campaign automation
-- Custom CRM builds, pipelines, integrations and reporting
 - Website design and development
 - Custom ERP systems
+- Custom CRM builds, pipelines, integrations and reporting
+- AI automation: n8n workflows, AI voice agents, chat/task agents and outbound campaigns
 
 Key pages for understanding the business:
 - / → Overview of services, case studies and contact
 - /services → Overview of all services, with live demo builds
-- /services/automation → Business automation (n8n workflows, AI agents, integrations)
 - /services/website → Website design and development
 - /services/erp → Custom ERP systems
 - /services/crm → Custom CRM development
+- /services/automation → Business automation (n8n workflows, AI agents, integrations)
 
 Content priority order:
 1. Homepage

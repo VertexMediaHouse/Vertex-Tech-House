@@ -10,6 +10,67 @@ interface Review {
   service: string;
 }
 
+interface VideoTestimonial {
+  src: string;
+  poster?: string;
+  name: string;
+  position: string;
+  quote: string;
+  service: string;
+}
+
+// TODO(content): drop the testimonial videos into public/assets/video/testimonials/ and fill in the details.
+export const videoTestimonials: VideoTestimonial[] = [
+  {
+    src: "/assets/video/testimonials/1.mp4",
+    name: "Client name",
+    position: "Designation",
+    quote: "One line from the video goes here.",
+    service: "Website",
+  },
+  {
+    src: "/assets/video/testimonials/2.mp4",
+    name: "Client name",
+    position: "Designation",
+    quote: "One line from the video goes here.",
+    service: "CRM",
+  },
+];
+
+const ServiceTag = ({ service }: { service: string }) => (
+  <span className="mt-3 inline-flex w-fit rounded-full bg-[#ff4d31]/10 px-2.5 py-0.5 text-xs font-semibold text-[#ff4d31]">
+    {service}
+  </span>
+);
+
+function VideoCard({ t }: { t: VideoTestimonial }) {
+  return (
+    <div className="grid grid-cols-5 gap-5 rounded-2xl border border-white/40 dark:border-white/10 liquid-glass dark:!bg-white/[0.03] p-4 md:p-5">
+      <div className="col-span-2 relative aspect-[9/16] rounded-xl overflow-hidden bg-neutral-900">
+        <video
+          src={t.src}
+          poster={t.poster}
+          controls
+          playsInline
+          preload="metadata"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      </div>
+      <div className="col-span-3 flex flex-col py-2">
+        <span className="text-5xl leading-none font-black text-[#ff4d31]">"</span>
+        <p className="mt-1 text-lg md:text-xl font-semibold leading-snug text-neutral-900 dark:text-white">
+          {t.quote}
+        </p>
+        <div className="mt-auto pt-6 border-t border-neutral-200/50 dark:border-white/5">
+          <p className="text-base font-bold text-neutral-950 dark:text-white">{t.name}</p>
+          <p className="text-sm text-neutral-500 dark:text-neutral-400">{t.position}</p>
+          <ServiceTag service={t.service} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // TODO(content): confirm these are real clients before launch.
 const reviews: Review[] = [
   {
@@ -71,6 +132,7 @@ const ReviewCard = ({ review, name, position, service }: Review) => {
                   {position}
                 </span>
               </div>
+              <ServiceTag service={service} />
             </div>
           </div>
         </div>
@@ -79,7 +141,15 @@ const ReviewCard = ({ review, name, position, service }: Review) => {
   );
 };
 
-export function Reviews({ rows = 2, items = reviews }: { rows?: 1 | 2; items?: Review[] }) {
+export function Reviews({
+  rows = 2,
+  items = reviews,
+  videos,
+}: {
+  rows?: 1 | 2;
+  items?: Review[];
+  videos?: VideoTestimonial[];
+}) {
   // Split reviews into rows
   const row1 = rows === 1 ? items : items.slice(0, Math.ceil(items.length / 2));
   const row2 = items.slice(Math.ceil(items.length / 2));
@@ -132,6 +202,14 @@ export function Reviews({ rows = 2, items = reviews }: { rows?: 1 | 2; items?: R
           Founders and operators who handed us their busywork - here's what happened.
         </motion.p>
       </div>
+
+      {videos && (
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 mb-6 grid md:grid-cols-2 gap-6">
+          {videos.map((v, i) => (
+            <VideoCard key={i} t={v} />
+          ))}
+        </div>
+      )}
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
         <div className="relative flex flex-col gap-4">

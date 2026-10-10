@@ -8,7 +8,7 @@ import { SectionGlow } from "./SectionGlow";
 
 /* Home "Services": the four service pages as tall cards, each topped with a slanted reel of its work. */
 
-/** Two rows of tiles drifting in opposite directions on a tilted plane, fading into the card. */
+/** Rows of tiles drifting in alternating directions on a tilted plane, fading into the card. */
 function SlantedReel({ rows, speed = 28 }: { rows: React.ReactNode[][]; speed?: number }) {
   return (
     <div aria-hidden className="absolute inset-0 pointer-events-none">
@@ -92,10 +92,24 @@ const reels: Record<ServiceSlug, React.ReactNode[][]> = {
     ["Invoice reminder sent", "Call back booked · Tue", "Deal created", "Answered by AI agent"].map(
       done,
     ),
+    [
+      "Form reply sent in 4 min",
+      "Contact synced to Sheets",
+      "Follow-up email sent",
+      "WhatsApp reminder sent",
+    ].map(done),
+    [
+      "Invoice paid · receipt sent",
+      "Call summary logged",
+      "Task assigned to Sarah",
+      "Weekly report delivered",
+    ].map(done),
   ],
   website: [
     ["hero", "harbor", "olive", "linen"].map(site),
     ["cedar", "maple", "ashford", "studio"].map(site),
+    ["olive", "studio", "hero", "maple"].map(site),
+    ["linen", "ashford", "harbor", "cedar"].map(site),
   ],
   erp: [
     [
@@ -110,6 +124,18 @@ const reels: Record<ServiceSlug, React.ReactNode[][]> = {
       stat(Truck, "Delivered", "SO-1044"),
       stat(Check, "Approved", "purchase order"),
     ],
+    [
+      stat(Users, "42 staff", "rota published"),
+      stat(Truck, "Dispatched", "SO-1051"),
+      stat(CircleDollarSign, "£38,920", "owed to you"),
+      stat(Package, "Low stock", "reorder raised"),
+    ],
+    [
+      stat(Check, "VAT return", "ready to file"),
+      stat(Package, "1,284", "items in stock"),
+      stat(CircleDollarSign, "Paid", "INV-2207"),
+      stat(Truck, "PO-4482", "supplier confirmed"),
+    ],
   ],
   crm: [
     [
@@ -123,6 +149,18 @@ const reels: Record<ServiceSlug, React.ReactNode[][]> = {
       deal("Jonah Weiss", "£68,000", "Consultation"),
       deal("Grace Liu", "£19,800", "Consultation"),
       deal("Ben Carter", "£23,400", "Won"),
+    ],
+    [
+      deal("Emily Ward", "£31,500", "Proposal"),
+      deal("Leo Martins", "£52,000", "Enquiry"),
+      deal("Sofia Alvarez", "£77,200", "Consultation"),
+      deal("Marcus Reid", "£16,900", "Won"),
+    ],
+    [
+      deal("Hannah Cole", "£39,000", "Consultation"),
+      deal("Richard Hale", "£145,000", "Proposal"),
+      deal("Tom Becker", "£24,600", "Enquiry"),
+      deal("Sarah Mills", "£58,300", "Won"),
     ],
   ],
 };

@@ -4,7 +4,7 @@ import { Hero } from "@/components/site/Hero";
 import { ServiceOverview } from "@/components/site/ServiceOverview";
 import { Portfolio } from "@/components/site/Portfolio";
 import { WhyChooseUs } from "@/components/site/WhyChooseUs";
-import { Reviews } from "@/components/site/Reviews";
+import { Reviews, videoTestimonials } from "@/components/site/Reviews";
 import { MediaHouseCTA } from "@/components/site/MediaHouseCTA";
 
 export const Route = createFileRoute("/")({
@@ -21,7 +21,7 @@ function Index() {
       <ServiceOverview />
       <Portfolio />
       <WhyChooseUs />
-      <Reviews rows={1} />
+      <Reviews rows={1} videos={videoTestimonials} />
     </PageShell>
   );
 }

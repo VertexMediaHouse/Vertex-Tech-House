@@ -76,14 +76,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
       // SEO TITLE (50–60 chars optimized)
       {
-        title: "Vertex Tech House | AI Automation & Custom CRM Builds",
+        title: "Vertex Tech House | Websites, ERP, CRM & AI Automation",
       },
 
       // META DESCRIPTION (service + keyword aligned)
       {
         name: "description",
         content:
-          "n8n workflow automation, AI voice agents, outbound campaigns and custom CRM builds. Vertex Tech House builds the systems that run your business 24/7.",
+          "Custom websites, ERP systems, CRM builds and AI automation. Vertex Tech House builds the systems that run your business 24/7.",
       },
 
       { name: "author", content: "Vertex Tech House" },
@@ -92,19 +92,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "keywords",
         content:
-          "n8n automation, workflow automation, AI voice agents, outbound campaigns, custom CRM development, business automation agency",
+          "website development, custom ERP development, custom CRM development, AI automation, n8n automation, AI voice agents, business automation agency",
       },
 
       // OPEN GRAPH
       // TODO(brand): add og:image / twitter:image once a Vertex Tech House share image exists.
       {
         property: "og:title",
-        content: "Vertex Tech House | AI Automation & Custom CRM Builds",
+        content: "Vertex Tech House | Websites, ERP, CRM & AI Automation",
       },
       {
         property: "og:description",
-        content:
-          "n8n workflows, AI voice agents, outbound campaigns and custom CRMs for scaling businesses.",
+        content: "Websites, ERPs, custom CRMs and AI automation for scaling businesses.",
       },
       { property: "og:type", content: "website" },
       {
@@ -116,12 +115,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       {
         name: "twitter:title",
-        content: "Vertex Tech House | Automation & CRM",
+        content: "Vertex Tech House | Websites, ERP, CRM & Automation",
       },
       {
         name: "twitter:description",
-        content:
-          "n8n workflows, AI voice agents, outbound campaigns and custom CRMs for scaling businesses.",
+        content: "Websites, ERPs, custom CRMs and AI automation for scaling businesses.",
       },
     ],
 

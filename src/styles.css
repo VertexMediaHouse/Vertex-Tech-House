@@ -352,3 +352,29 @@
     border-radius: 0.75rem;
   }
 }
+
+/* Feature-card icons redraw themselves on hover. Every stroke in a 24px lucide icon is under 100
+   units long, so a 100-unit dash drawn from offset 100 to 0 traces it in. */
+@keyframes icon-draw {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.group:hover .icon-draw > * {
+  stroke-dasharray: 100;
+  animation: icon-draw 1s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+.group:hover .icon-draw > :nth-child(2) {
+  animation-delay: 0.08s;
+}
+.group:hover .icon-draw > :nth-child(n + 3) {
+  animation-delay: 0.16s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .group:hover .icon-draw > * {
+    animation: none;
+  }
+}

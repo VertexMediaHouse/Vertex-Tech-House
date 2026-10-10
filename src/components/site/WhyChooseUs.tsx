@@ -96,7 +96,6 @@ export const FeatureCard = ({
             <motion.div
               animate={{
                 y: [0, -8, 0],
-                rotate: [0, 10, -10, 0],
                 scale: [1, 1.05, 1],
               }}
               transition={{
@@ -106,21 +105,8 @@ export const FeatureCard = ({
               }}
               className="flex h-14 w-14 items-center justify-center rounded-xl bg-orange-500/10 text-[#ff4d31] group-hover:scale-110 group-hover:bg-orange-500/20 transition-all duration-500"
             >
-              <Icon className="h-7 w-7 transition-transform duration-500 group-hover:rotate-[360deg]" />
-
-              {/* Icon Glow Animation */}
-              <motion.div
-                animate={{
-                  opacity: [0.2, 0.5, 0.2],
-                  scale: [1, 1.3, 1],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="absolute inset-0 rounded-xl bg-orange-500/20 blur-xl"
-              />
+              {/* on hover the icon redraws itself, stroke by stroke (styles.css) */}
+              <Icon className="icon-draw h-7 w-7" />
             </motion.div>
           </div>
 

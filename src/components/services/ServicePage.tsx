@@ -7,22 +7,15 @@ import {
   BellRing,
   Bot,
   Boxes,
-  Building2,
   ChartColumn,
   Code2,
-  Contact,
-  Factory,
   FileText,
-  Filter,
-  FolderKanban,
-  Gauge,
   Globe,
   Handshake,
   Inbox,
   Kanban,
   LayoutTemplate,
   Magnet,
-  Megaphone,
   MessagesSquare,
   MousePointerClick,
   Package,
@@ -31,8 +24,6 @@ import {
   RefreshCw,
   Search,
   ShoppingCart,
-  Smartphone,
-  Truck,
   Users,
   Wallet,
   Workflow,
@@ -51,12 +42,12 @@ import { LogoMarquee } from "@/components/site/Marquee";
 import { FeatureCard } from "@/components/site/WhyChooseUs";
 import { CaseStudies } from "@/components/site/CaseStudies";
 import { ToolAssembly } from "@/components/site/ToolAssembly";
-import { Reviews } from "@/components/site/Reviews";
+import { Reviews, videoTestimonials } from "@/components/site/Reviews";
+import { ErpModules } from "./ErpModules";
 import type { CalendarCTA } from "@/components/site/CalendarCTA";
 import {
   AutomationStages,
   CrmStages,
-  ErpStages,
   HeroApp,
   SectionWrap,
   StepProcess,
@@ -88,10 +79,12 @@ type Service = {
   intro: string;
   cta: string;
   booking: React.ComponentProps<typeof CalendarCTA>;
-  problem: { title: React.ReactNode; subtitle: string; items: [string, string][] };
+  /** without it, put a section of your own in `showcase` */
+  problem?: { title: React.ReactNode; subtitle: string; items: [string, string][] };
   /** extra sections between the problem and "How it works" */
   showcase?: React.ComponentType;
-  process: {
+  /** without it, `after` takes the place of "How it works" */
+  process?: {
     title: React.ReactNode;
     subtitle: string;
     steps: Step[];
@@ -185,24 +178,9 @@ export const services: Record<ServiceSlug, Service> = {
         description: "Deals created, owners assigned and follow-ups sent on schedule.",
       },
       {
-        icon: Megaphone,
-        title: "Marketing automation",
-        description: "Personalised campaigns triggered by what contacts actually do.",
-      },
-      {
-        icon: BellRing,
-        title: "Notifications & alerts",
-        description: "The right person told by email or WhatsApp the moment it matters.",
-      },
-      {
         icon: RefreshCw,
         title: "Data synchronisation",
         description: "Records kept identical across your CRM, sheets and other tools.",
-      },
-      {
-        icon: Plug,
-        title: "API & integrations",
-        description: "Custom connections for tools that don't have a ready-made integration.",
       },
       {
         icon: FileText,
@@ -307,29 +285,14 @@ export const services: Record<ServiceSlug, Service> = {
         description: "Clean, modern code that loads fast and is easy to maintain.",
       },
       {
-        icon: Smartphone,
-        title: "Responsive design",
-        description: "Designed for phones first, then tablets and desktops. Never shrunk to fit.",
-      },
-      {
         icon: MousePointerClick,
         title: "Landing pages",
         description: "Single-purpose pages for campaigns and launches, built to convert.",
       },
       {
-        icon: Building2,
-        title: "Business websites",
-        description: "Multi-page sites that explain what you do and earn trust quickly.",
-      },
-      {
         icon: AppWindow,
         title: "Custom web applications",
         description: "Portals, dashboards and booking tools when a brochure site isn't enough.",
-      },
-      {
-        icon: Gauge,
-        title: "Performance optimisation",
-        description: "Lean pages, optimised images and fast hosting for strong Core Web Vitals.",
       },
       {
         icon: Search,
@@ -389,44 +352,7 @@ export const services: Record<ServiceSlug, Service> = {
         "Book a free 20-minute call. Walk us through how the business runs today and we'll outline what your ERP should cover first.",
       action: "Discuss Your ERP Requirements",
     },
-    problem: {
-      title: <>Growth shouldn't mean {o("more spreadsheets.")}</>,
-      subtitle:
-        "When operations outgrow their tools, every department builds its own workaround and nobody sees the whole business.",
-      items: [
-        ["Disconnected systems", "Sales, stock and accounts live in tools that never quite agree."],
-        ["Spreadsheet dependency", "Critical numbers sit in files only one person understands."],
-        [
-          "No real-time visibility",
-          "You hear about a shortage or overdue invoice once it's a problem.",
-        ],
-        ["Duplicate data", "The same order entered three times, in three places, three ways."],
-        ["Manual reporting", "Month-end means days of exporting, merging and double-checking."],
-        ["Slow operations", "Teams wait on each other for information a system should have."],
-      ],
-    },
-    process: {
-      title: <>A structured rollout, {o("not a big-bang switch.")}</>,
-      subtitle:
-        "Scroll through the eight stages of an ERP rollout, from spreadsheets to one system.",
-      steps: [
-        {
-          name: "Business analysis",
-          text: "We map how each department works today and what it needs.",
-        },
-        {
-          name: "System architecture",
-          text: "Modules, data model, roles and integrations planned first.",
-        },
-        { name: "Configuration & development", text: "Built in stages you review as we go." },
-        { name: "Data migration", text: "Records cleaned, validated and moved from spreadsheets." },
-        { name: "Testing", text: "Real scenarios run with your team before anything goes live." },
-        { name: "Training", text: "Role-based sessions so every team is confident on day one." },
-        { name: "Deployment", text: "A planned go-live, with us on hand while you switch over." },
-        { name: "Ongoing optimisation", text: "We refine workflows and add modules as you grow." },
-      ],
-      stages: ErpStages,
-    },
+    after: ErpModules,
     deliverables: [
       {
         icon: Wallet,
@@ -444,25 +370,9 @@ export const services: Record<ServiceSlug, Service> = {
         description: "Quotes, orders and deliveries tracked from first price to final payment.",
       },
       {
-        icon: Truck,
-        title: "Purchasing",
-        description: "Purchase orders raised, approved and matched to what actually arrived.",
-      },
-      {
         icon: Users,
         title: "HR & payroll",
         description: "Staff records, leave and payroll runs without the spreadsheet.",
-      },
-      {
-        icon: Factory,
-        title: "Manufacturing",
-        description:
-          "Bills of materials, work orders and production runs, if you make what you sell.",
-      },
-      {
-        icon: FolderKanban,
-        title: "Projects & jobs",
-        description: "Costs, time and progress tracked against every job or project.",
       },
       {
         icon: ChartColumn,
@@ -559,11 +469,6 @@ export const services: Record<ServiceSlug, Service> = {
         description: "Leads from every channel captured, scored and assigned automatically.",
       },
       {
-        icon: Contact,
-        title: "Contact management",
-        description: "The full history of every person and company in one timeline.",
-      },
-      {
         icon: Kanban,
         title: "Sales pipeline",
         description: "Your stages on one board, with deal values and next steps at a glance.",
@@ -582,16 +487,6 @@ export const services: Record<ServiceSlug, Service> = {
         icon: ChartColumn,
         title: "Reporting & analytics",
         description: "Live revenue, conversion and activity dashboards for the whole team.",
-      },
-      {
-        icon: Workflow,
-        title: "Workflow automation",
-        description: "Routing, stage changes and hand-offs that happen on their own.",
-      },
-      {
-        icon: Filter,
-        title: "Customer segmentation",
-        description: "Group contacts by behaviour, value or stage for targeted outreach.",
       },
       {
         icon: Plug,
@@ -621,7 +516,7 @@ export const services: Record<ServiceSlug, Service> = {
   },
 };
 
-export const serviceList = Object.values(services);
+export const serviceList = [services.website, services.erp, services.crm, services.automation];
 
 function Hero({ s }: { s: Service }) {
   return (
@@ -688,7 +583,7 @@ function Hero({ s }: { s: Service }) {
   );
 }
 
-function Problem({ p }: { p: Service["problem"] }) {
+function Problem({ p }: { p: NonNullable<Service["problem"]> }) {
   return (
     <SectionWrap id="problem" eyebrow="The problem" title={p.title} subtitle={p.subtitle}>
       <ol className="grid gap-x-12 md:grid-cols-2">
@@ -775,14 +670,16 @@ export function ServicePage({ slug }: { slug: ServiceSlug }) {
       <div className="py-6">
         <LogoMarquee />
       </div>
-      <Problem p={s.problem} />
+      {s.problem && <Problem p={s.problem} />}
       {Showcase && <Showcase />}
-      <StepProcess
-        title={s.process.title}
-        subtitle={s.process.subtitle}
-        steps={s.process.steps}
-        stageView={s.process.stages}
-      />
+      {s.process && (
+        <StepProcess
+          title={s.process.title}
+          subtitle={s.process.subtitle}
+          steps={s.process.steps}
+          stageView={s.process.stages}
+        />
+      )}
       {After && <After />}
       <OtherServices current={slug} />
       <div id="included" className="scroll-mt-24">
@@ -794,7 +691,7 @@ export function ServicePage({ slug }: { slug: ServiceSlug }) {
           </div>
         </SectionWrap>
       </div>
-      {s.reviews && <Reviews rows={1} />}
+      {s.reviews && <Reviews rows={1} videos={videoTestimonials} />}
       <Faq faqs={s.faqs} />
     </PageShell>
   );

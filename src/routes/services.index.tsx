@@ -24,14 +24,17 @@ import { Showcase } from "@/components/site/Showcase";
 import { Reviews } from "@/components/site/Reviews";
 
 const description =
-  "n8n workflow automation, AI voice agents, outbound campaigns and custom CRM builds, designed to work together.";
+  "Custom websites, ERP systems, CRM builds and AI automation, designed to work together.";
 
 export const Route = createFileRoute("/services/")({
   head: () => ({
     meta: [
-      { title: "Automation & CRM Services | Vertex Tech House" },
+      { title: "Websites, ERP, CRM & Automation Services | Vertex Tech House" },
       { name: "description", content: description },
-      { property: "og:title", content: "Automation & CRM Services | Vertex Tech House" },
+      {
+        property: "og:title",
+        content: "Websites, ERP, CRM & Automation Services | Vertex Tech House",
+      },
       { property: "og:description", content: description },
       { property: "og:url", content: "https://vertextechhouse.com/services" },
     ],
@@ -127,17 +130,6 @@ function ServicesPage() {
       </div>
       <Showcase />
       <Services
-        id="automation"
-        eyebrow="Automation"
-        title={
-          <>
-            Stop doing work <span className="text-[#ff4d31]">a system can do.</span>
-          </>
-        }
-        subtitle="n8n workflows, AI voice agents and outbound campaigns that handle the repetitive work while you focus on growth."
-        items={automation}
-      />
-      <Services
         id="crm"
         eyebrow="CRM"
         title={
@@ -147,6 +139,17 @@ function ServicesPage() {
         }
         subtitle="A CRM built around how your team sells. Every lead, deal and follow-up tracked without anyone typing."
         items={crm}
+      />
+      <Services
+        id="automation"
+        eyebrow="Automation"
+        title={
+          <>
+            Stop doing work <span className="text-[#ff4d31]">a system can do.</span>
+          </>
+        }
+        subtitle="n8n workflows, AI voice agents and outbound campaigns that handle the repetitive work while you focus on growth."
+        items={automation}
       />
       <ToolAssembly />
       <CaseStudies />
