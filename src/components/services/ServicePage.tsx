@@ -44,21 +44,16 @@ import { CaseStudies } from "@/components/site/CaseStudies";
 import { ToolAssembly } from "@/components/site/ToolAssembly";
 import { Reviews, videoTestimonials } from "@/components/site/Reviews";
 import { ErpModules } from "./ErpModules";
+import { CrmModules } from "./CrmModules";
+import { AutomationBuild } from "./AutomationBuild";
+import { WebsiteBuild } from "./WebsiteBuild";
 import type { CalendarCTA } from "@/components/site/CalendarCTA";
-import {
-  AutomationStages,
-  CrmStages,
-  HeroApp,
-  SectionWrap,
-  StepProcess,
-  WebsiteStages,
-  type Step,
-} from "./ServiceVisuals";
+import { HeroApp, SectionWrap } from "./ServiceVisuals";
 
 /**
  * The four service pages (/services/$slug), built the way Vertex Media House's service pages are:
- * split hero with the product in action → logos → the problem → work → a scroll-driven
- * "How it works" → other services → what's included → reviews → FAQ → booking.
+ * split hero with the product in action → logos → work → a module scroll stack
+ * → other services → what's included → reviews → FAQ → booking.
  */
 
 export type ServiceSlug = "automation" | "website" | "erp" | "crm";
@@ -79,18 +74,9 @@ type Service = {
   intro: string;
   cta: string;
   booking: React.ComponentProps<typeof CalendarCTA>;
-  /** without it, put a section of your own in `showcase` */
-  problem?: { title: React.ReactNode; subtitle: string; items: [string, string][] };
-  /** extra sections between the problem and "How it works" */
+  /** extra sections after the logos */
   showcase?: React.ComponentType;
-  /** without it, `after` takes the place of "How it works" */
-  process?: {
-    title: React.ReactNode;
-    subtitle: string;
-    steps: Step[];
-    stages: (props: { stage: number }) => React.ReactElement;
-  };
-  /** extra sections after "How it works" */
+  /** the module scroll stack, and anything that follows it */
   after?: React.ComponentType;
   deliverables: { icon: React.ElementType; title: string; description: string }[];
   reviews: boolean;
@@ -124,42 +110,13 @@ export const services: Record<ServiceSlug, Service> = {
         "Book a free 20-minute call. We'll look at how your team works and tell you what's worth automating, what it would take and what it would save.",
       action: "Talk to Us",
     },
-    problem: {
-      title: <>Your team is doing {o("a system's job.")}</>,
-      subtitle:
-        "In most growing businesses the slow part isn't the work itself. It's the copying, chasing and checking around it.",
-      items: [
-        ["Repetitive manual tasks", "The same clicks, copies and checks, done by hand every day."],
-        ["Data entry", "Details retyped from emails and forms into spreadsheets and systems."],
-        ["Manual follow-ups", "Leads and invoices wait until someone remembers to chase them."],
-        ["Disconnected tools", "Your CRM, inbox and spreadsheets each hold part of the picture."],
-        ["Human error", "One wrong field travels quietly through every step after it."],
-        ["No visibility", "Nobody can see what's stuck, what's done or where the hours go."],
-      ],
-    },
     showcase: () => <CaseStudies category="Automation" />,
-    process: {
-      title: <>Five steps. {o("Zero busywork.")}</>,
-      subtitle: "Scroll to watch one workflow go from a manual chore to a system that runs itself.",
-      steps: [
-        {
-          name: "Understand",
-          text: "We map the process with your team and find where the hours go.",
-        },
-        {
-          name: "Design",
-          text: "The workflow, the data it needs and what happens when things go wrong.",
-        },
-        { name: "Build", text: "Built in n8n and tested against real data and edge cases." },
-        {
-          name: "Integrate",
-          text: "Connected to your live tools and switched on alongside your team.",
-        },
-        { name: "Optimise", text: "We watch every run and automate the next bottleneck." },
-      ],
-      stages: AutomationStages,
-    },
-    after: ToolAssembly,
+    after: () => (
+      <>
+        <AutomationBuild />
+        <ToolAssembly />
+      </>
+    ),
     deliverables: [
       {
         icon: Workflow,
@@ -239,40 +196,7 @@ export const services: Record<ServiceSlug, Service> = {
         "Book a free 20-minute call. Tell us what the site needs to do and we'll outline the scope, timeline and next steps.",
       action: "Start Your Project",
     },
-    problem: {
-      title: <>A website that {o("doesn't sell.")}</>,
-      subtitle: "Most business sites look fine and do very little. These are the usual reasons.",
-      items: [
-        ["Slow pages", "Visitors leave before the page loads, and search engines notice."],
-        ["Unclear message", "People can't tell what you do or who it's for in five seconds."],
-        [
-          "Built for desktop",
-          "Most visitors are on a phone, and the site was an afterthought there.",
-        ],
-        ["No clear next step", "No obvious way to enquire, book or buy on the pages that matter."],
-        ["Lost enquiries", "Form submissions sit in an inbox instead of reaching your pipeline."],
-        ["Hard to update", "Every small change needs a developer, so the site goes stale."],
-      ],
-    },
-    process: {
-      title: <>Six steps. {o("One launch.")}</>,
-      subtitle: "Scroll to watch one site go from a sitemap to live and improving.",
-      steps: [
-        {
-          name: "Strategy",
-          text: "The audience, the job of every page and how success is measured.",
-        },
-        { name: "UX/UI", text: "Wireframes, then full designs you approve before any code." },
-        {
-          name: "Development",
-          text: "Responsive, accessible and fast, on a stack you can grow with.",
-        },
-        { name: "Testing", text: "Every page checked across devices, browsers, forms and speed." },
-        { name: "Launch", text: "Domain, redirects and analytics set up so nothing breaks." },
-        { name: "Optimisation", text: "We watch real visitors and improve what holds them back." },
-      ],
-      stages: WebsiteStages,
-    },
+    after: WebsiteBuild,
     deliverables: [
       {
         icon: Palette,
@@ -430,38 +354,7 @@ export const services: Record<ServiceSlug, Service> = {
         "Book a free 20-minute call. We'll look at how your team sells today and outline the CRM that fits it.",
       action: "Build Your CRM",
     },
-    problem: {
-      title: <>Revenue slips {o("through the cracks.")}</>,
-      subtitle:
-        "Without one place for customers, good leads go cold and nobody can say exactly why.",
-      items: [
-        [
-          "Leads getting lost",
-          "Enquiries arrive by form, phone and DM, and some never get a reply.",
-        ],
-        ["Poor follow-up", "Follow-ups rely on memory, so the busiest weeks lose the most deals."],
-        ["Scattered information", "Notes, emails and history spread across inboxes and sheets."],
-        [
-          "No pipeline visibility",
-          "You can't see what's closing this month, or where deals stall.",
-        ],
-        ["Manual reporting", "Every sales meeting starts with someone rebuilding the numbers."],
-        ["Inconsistent process", "Everyone sells their own way, so results are hard to repeat."],
-      ],
-    },
-    process: {
-      title: <>Six steps. {o("No lost leads.")}</>,
-      subtitle: "Scroll to watch a messy inbox become a pipeline your team actually uses.",
-      steps: [
-        { name: "Understand", text: "Your sales process, your team and where deals get stuck." },
-        { name: "Design", text: "Stages, fields, views and permissions designed with your team." },
-        { name: "Configure", text: "We build the CRM and the automations around it." },
-        { name: "Integrate", text: "Email, calendar and forms connected, your data migrated in." },
-        { name: "Launch", text: "Team training and a supported go-live, so adoption sticks." },
-        { name: "Optimise", text: "We refine the pipeline as you learn what works." },
-      ],
-      stages: CrmStages,
-    },
+    after: CrmModules,
     deliverables: [
       {
         icon: Inbox,
@@ -583,37 +476,6 @@ function Hero({ s }: { s: Service }) {
   );
 }
 
-function Problem({ p }: { p: NonNullable<Service["problem"]> }) {
-  return (
-    <SectionWrap id="problem" eyebrow="The problem" title={p.title} subtitle={p.subtitle}>
-      <ol className="grid gap-x-12 md:grid-cols-2">
-        {p.items.map(([title, body], i) => (
-          <motion.li
-            key={title}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.6 }}
-            transition={{ duration: 0.45, delay: (i % 2) * 0.1 }}
-            className="flex gap-5 border-t border-neutral-200 py-6 dark:border-white/10"
-          >
-            <span className="w-6 shrink-0 pt-1 font-mono text-xs text-[#ff4d31]">
-              {String(i + 1).padStart(2, "0")}
-            </span>
-            <div>
-              <h3 className="text-lg md:text-xl font-semibold tracking-tight text-neutral-950 dark:text-white">
-                {title}
-              </h3>
-              <p className="mt-1.5 text-[15px] leading-relaxed text-neutral-600 dark:text-neutral-400">
-                {body}
-              </p>
-            </div>
-          </motion.li>
-        ))}
-      </ol>
-    </SectionWrap>
-  );
-}
-
 function Faq({ faqs }: { faqs: Service["faqs"] }) {
   return (
     <SectionWrap eyebrow="FAQ" title="Questions, answered.">
@@ -670,16 +532,7 @@ export function ServicePage({ slug }: { slug: ServiceSlug }) {
       <div className="py-6">
         <LogoMarquee />
       </div>
-      {s.problem && <Problem p={s.problem} />}
       {Showcase && <Showcase />}
-      {s.process && (
-        <StepProcess
-          title={s.process.title}
-          subtitle={s.process.subtitle}
-          steps={s.process.steps}
-          stageView={s.process.stages}
-        />
-      )}
       {After && <After />}
       <OtherServices current={slug} />
       <div id="included" className="scroll-mt-24">

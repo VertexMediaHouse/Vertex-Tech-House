@@ -1,11 +1,25 @@
 import * as React from "react";
 import { Link } from "@tanstack/react-router";
-import { Menu, FolderHeart, Info, HelpCircle, ChevronDown, LayoutGrid } from "lucide-react";
+import {
+  Menu,
+  FolderHeart,
+  Info,
+  HelpCircle,
+  ChevronDown,
+  LayoutGrid,
+  Download,
+} from "lucide-react";
 import { LogoLockup } from "./Logo";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { calTrigger, WHATSAPP_URL } from "@/lib/contact";
 import { serviceList } from "@/components/services/ServicePage";
+
+const BROCHURE = {
+  href: "/assets/vertex-tech-house-company-profile.pdf",
+  download: "Vertex Tech House - Company Profile.pdf",
+  label: "Brochure",
+};
 
 const navLinks = [
   { label: "Our Work", href: "/#our-work", icon: FolderHeart },
@@ -147,6 +161,15 @@ export function Navbar() {
                     <span className="text-sm font-medium">{l.label}</span>
                   </a>
                 ))}
+                <a
+                  href={BROCHURE.href}
+                  download={BROCHURE.download}
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-4 px-3 py-3 rounded-xl text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+                >
+                  <Download className="h-5 w-5 text-neutral-400" />
+                  <span className="text-sm font-medium">{BROCHURE.label}</span>
+                </a>
                 <Button
                   asChild
                   className="mt-4 rounded-full bg-green-500 text-white hover:bg-green-600 dark:bg-green-500 dark:text-white dark:hover:bg-green-600"
@@ -172,6 +195,17 @@ export function Navbar() {
           </Sheet>
         </div>
       </nav>
+
+      {/* Company profile: its own button beside the nav, not a nav link */}
+      <a
+        href={BROCHURE.href}
+        download={BROCHURE.download}
+        title="Download our company profile (PDF)"
+        className="pointer-events-auto liquid-glass liquid-glass-accent absolute right-4 top-1/2 hidden -translate-y-1/2 items-center gap-2 rounded-[12px] border border-white/40 px-4 py-[7px] text-sm font-medium text-neutral-700 shadow-lg shadow-black/5 transition-colors lg:flex dark:border-white/10 dark:text-neutral-300"
+      >
+        <Download className="h-4 w-4 shrink-0" />
+        <span className="hidden xl:inline">{BROCHURE.label}</span>
+      </a>
     </header>
   );
 }

@@ -14,7 +14,6 @@ import {
   ArrowRightLeft,
 } from "lucide-react";
 import { PageShell } from "@/components/site/PageShell";
-import { Packages } from "@/components/site/ServiceSections";
 import { ServiceHero } from "@/components/site/ServiceHero";
 import { ToolAssembly } from "@/components/site/ToolAssembly";
 import { LogoMarquee } from "@/components/site/Marquee";
@@ -154,7 +153,6 @@ function ServicesPage() {
       <ToolAssembly />
       <CaseStudies />
       <Reviews />
-      <Packages />
     </PageShell>
   );
 }

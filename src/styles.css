@@ -204,6 +204,14 @@
       0 8px 32px -8px rgba(0, 0, 0, 0.5);
   }
 
+  /* liquid glass that fills with the brand orange on hover */
+  .liquid-glass-accent:hover,
+  .dark .liquid-glass-accent:hover {
+    background: #ff4d31;
+    border-color: #ff4d31;
+    color: #fff;
+  }
+
   @keyframes marquee {
     0% {
       transform: translateX(0);
