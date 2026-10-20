@@ -5,7 +5,7 @@ import { LightRays } from "./LightRays";
 import { useTheme } from "@/components/theme-provider";
 import { calTrigger } from "@/lib/contact";
 
-const words = ["n8n Workflows", "AI Agents", "Custom CRMs", "Automation"];
+const words = ["Web Development", "ERP Systems", "CRM Development", "Business Automation"];  
 
 export function Hero() {
   const { theme } = useTheme();
